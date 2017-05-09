@@ -1,0 +1,11 @@
+#!/bin/zsh
+
+echo "Cloning files"
+terminus backup:create "${PANTHEON}.live" --element=files
+URL=$( terminus backup:get "${PANTHEON}.live" --element=files )
+wget -O files.tar.gz "$URL"
+mkdir -p ./wp-content/uploads
+tar zxvf files.tar.gz
+mv ./files_live/* ./wp-content/uploads
+rm -rf ./files_live
+rm files.tar.gz

@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+echo "Cloning database"
+terminus backup:create "${PANTHEON}.live" --element=db
+URL=$( terminus backup:get "${PANTHEON}.live" --element=db )
+wget -O database.sql.gz "$URL"
+gunzip < database.sql.gz | mysql -uroot -pboathouse "$L_DATABASE"
+rm database.sql.gz
