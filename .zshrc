@@ -75,6 +75,8 @@ source $ZSH/oh-my-zsh.sh
 
 
 export LC_CTYPE=en_US.UTF-8
+alias source="source $HOME/.zshrc"
+eval "$(direnv hook zsh)"
 
 function config {
     /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME "$@"

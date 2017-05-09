@@ -4,7 +4,12 @@ Read this -> https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotf
 
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-## Dotenv
+# TODO
+
+- Fix imwheel on startup
+
+## Direnv
 eval "$(direnv hook zsh)"
 
 ## Oh my zsh
+
