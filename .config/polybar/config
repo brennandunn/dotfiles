@@ -46,8 +46,9 @@ module-margin-left = 0
 module-margin-right = 2
 
 font-0 = xft:bitstream vera sans mono:size=12:antialias=true
-font-1 = FontAwesome:fontformat=truetype:size=12;1
-font-2 = sm4tik:pixelsize=10;1
+font-1 = xft:bitstream vera sans mono:size=10:antialias=true
+font-2 = FontAwesome:fontformat=truetype:size=12;1
+font-3 = sm4tik:pixelsize=10;1
 
 wm-restack = i3
 
@@ -243,6 +244,7 @@ type = internal/memory
 interval = 2
 format-prefix = "mem "
 format-prefix-foreground = ${colors.background-alt}
+format-prefix-font = 1
 format-underline = #4bffdc
 label = %percentage_used%%
 

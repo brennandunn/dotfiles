@@ -6,7 +6,12 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # TODO
 
-- Fix imwheel on startup
+- compton change switches faster
+- screenshot hotkey
+- dropbox running
+- keyboard shortcuts for spotify / volume
+- make unfocused windows lower opacity
+- gtk theme
 
 ## Direnv
 eval "$(direnv hook zsh)"
