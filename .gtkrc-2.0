@@ -2,8 +2,8 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/brennan/.gtkrc-2.0.mine"
-gtk-theme-name="Numix"
-gtk-icon-theme-name="hicolor"
+gtk-theme-name="monokai-gtk"
+gtk-icon-theme-name="Adwaita"
 gtk-font-name="Inconsolata Medium 12"
 gtk-cursor-theme-name="breeze_cursors"
 gtk-cursor-theme-size=0
@@ -15,5 +15,5 @@ gtk-enable-event-sounds=1
 gtk-enable-input-feedback-sounds=1
 gtk-xft-antialias=1
 gtk-xft-hinting=1
-gtk-xft-hintstyle="hintslight"
-gtk-xft-rgba="rgb"
+gtk-xft-hintstyle="hintfull"
+gtk-xft-rgba="vrgb"

@@ -6,12 +6,12 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # TODO
 
-- compton change switches faster
+- compton disable shadow for Chrome
+- roki font issue
+- chrome bookmark bar font
 - screenshot hotkey
 - dropbox running
 - keyboard shortcuts for spotify / volume
-- make unfocused windows lower opacity
-- gtk theme
 
 ## Direnv
 eval "$(direnv hook zsh)"

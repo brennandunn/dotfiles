@@ -141,7 +141,8 @@ for_window [class="^.*"] border pixel 0
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Compton
-exec compton --no-startup-id -b --config $HOME/.config/i3/compton.conf
+# exec_always compton --no-startup-id -b --config $HOME/.config/i3/compton.conf
+exec --no-startup-id exec compton -cb --config $HOME/.config/i3/compton.conf
 
 # Nitrogen
 exec --no-startup-id nitrogen --restore
