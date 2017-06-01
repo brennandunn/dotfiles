@@ -1,4 +1,4 @@
-export PATH=$HOME/bin:~/.scripts:~/.rbenv/bin:~/.rbenv/plugins/ruby-build/bin:~/.config/composer/vendor/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:~/.scripts:~/.rbenv/bin:~/.rbenv/plugins/ruby-build/bin:~/.config/composer/vendor/bin:/usr/local/bin:~/sites/dyf-redesign/node_modules/.bin/:$PATH
 export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="gallois"
