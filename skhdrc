@@ -16,6 +16,8 @@ alt - l : yabai -m window --focus east
 alt - q : yabai -m window --focus west
 alt - w : yabai -m window --focus east
 
+# Minimise
+alt - g : yabai -m window --minimize
 
 # Moving windows
 shift + alt - h : yabai -m window --warp west
@@ -69,9 +71,7 @@ shift + lctrl + alt - k : yabai -m window --insert north
 shift + lctrl + alt - l : yabai -m window --insert east
 
 # Float / Unfloat window
-shift + alt - space : \
-    yabai -m window --toggle float; \
-    yabai -m window --toggle border
+shift + alt - space : yabai -m window --toggle float
 
 # Restart Yabai
 lctrl + alt + cmd - q : brew services restart yabai
