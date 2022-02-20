@@ -3,12 +3,7 @@ autoload -U promptinit; promptinit
 prompt spaceship
 unsetopt PROMPT_SP
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="$PATH:$HOME/.composer/vendor/bin"
-export PATH="/usr/local/sbin:/usr/local/opt/python/libexec/bin:$PATH"
-export PATH=/opt/homebrew/bin:/usr/local/sbin:/usr/local/opt/python/libexec/bin:/Users/brennandunn/.rbenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/brennandunn/.composer/vendor/bin
+source ~/.zshrclocal
 
 source /Users/brennandunn/.dotfiles/.zsh/completion.zsh
 autoload -Uz compinit
@@ -23,7 +18,7 @@ fi
 # Enhanced form of menu completion called `menu selection'
 zmodload -i zsh/complist
 
-source /Users/brennandunn/.dotfiles/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source /Users/brennandunn/.dotfiles/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 alias ls="ls -G"
 alias zshreload='source ~/.zshrc' 
