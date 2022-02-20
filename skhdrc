@@ -78,4 +78,19 @@ lctrl + alt + cmd - q : brew services restart yabai
 
 # Make window native fullscreen
 alt - f         : yabai -m window --toggle zoom-fullscreen
+alt - t : yabai -m window --toggle float;\
+          yabai -m window --grid 4:4:1:1:2:2
 shift + alt - f : yabai -m window --toggle native-fullscreen
+
+##############################################
+# Floating
+##############################################
+
+# Fill
+shift + alt + cmd - up     : yabai -m window --grid 1:1:0:0:1:1
+
+# Left
+shift + alt + cmd - left   : yabai -m window --grid 1:2:0:0:1:1
+
+# Right
+shift + alt + cmd - right  : yabai -m window --grid 1:2:1:0:1:1
