@@ -48,6 +48,7 @@ yabai -m config window_gap                   16
 #yabai -m config --space 4 layout                       float
 
 yabai -m rule --add app="Google Chrome" space=1
+yabai -m rule --add app="Firefox" space=1
 yabai -m rule --add app="Visual Studio Code" space=2
 yabai -m rule --add app="Hyper" space=2
 yabai -m rule --add app="Spark" space=3
