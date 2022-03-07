@@ -45,20 +45,29 @@ yabai -m config left_padding                 16
 yabai -m config right_padding                16
 yabai -m config window_gap                   8
 
-#yabai -m config --space 4 layout                       float
+yabai -m config window_topmost                  on
+yabai -m config window_shadow                   float
+
+yabai -m space 1 --label "Web"
+yabai -m space 2 --label "Code"
+yabai -m space 3 --label "Prod"
+yabai -m space 4 --label "Misc"
 
 yabai -m rule --add app="Google Chrome" space=1
 yabai -m rule --add app="Firefox" space=1
 yabai -m rule --add app="Visual Studio Code" space=2
 yabai -m rule --add app="Hyper" space=2
 yabai -m rule --add app="Spark" space=3
+yabai -m rule --add app="^Notion" space=3
 yabai -m rule --add app="Messages" space=4
 yabai -m rule --add app="Tidal" space=4
 
 yabai -m rule --add app="^App Store$" manage=off
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
-yabai -m rule --add app="^Password$" manage=off
+yabai -m rule --add app="^1Password" manage=off
 yabai -m rule --add app="^Web Inspector$" manage=off
+yabai -m rule --add app="^Creative Cloud$" manage=off
+yabai -m rule --add app="^Alfred" manage=off
 
 echo "yabai configuration loaded.."
