@@ -71,7 +71,7 @@ shift + lctrl + alt - k : yabai -m window --insert north
 shift + lctrl + alt - l : yabai -m window --insert east
 
 # Float / Unfloat window
-shift + alt - space : yabai -m window --toggle float
+alt - t : yabai -m window --toggle float
 
 # Restart Yabai
 lctrl + alt + cmd - q : brew services restart yabai
