@@ -61,7 +61,7 @@ shift + alt - 4 : yabai -m window --space 4
 # lctrl + alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # Rotate windows clockwise and anticlockwise
-# alt - r         : yabai -m space --rotate 270
+alt - r         : yabai -m space --rotate 270
 # shift + alt - r : yabai -m space --rotate 90
 
 # Rotate on X and Y Axis
