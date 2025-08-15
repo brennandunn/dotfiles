@@ -1,0 +1,59 @@
+# on Ghostty's website, at https://ghostty.org/docs/config.
+
+# Config syntax crash course
+# ==========================
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# window-padding-x = 2
+#
+# # Spacing around the equals sign does not matter.
+# # All of these are identical:
+# key=value
+# key= value
+# key =value
+# key = value
+#
+# # Any line beginning with a # is a comment. It's not possible to put
+# # a comment after a config option, since it would be interpreted as a
+# # part of the value. For example, this will have a value of "#123abc":
+# background = #123abc
+#
+# # Empty values are used to reset config keys to default.
+# key =
+#
+# # Some config options have unique syntaxes for their value,
+# # which is explained in the docs for that config option.
+# # Just for example:
+# resize-overlay-duration = 4s 200ms
+
+#theme = tokyonight
+theme = rose-pine-moon
+window-theme = system
+shell-integration = fish
+# shell-integration-features = no-cursor
+font-size = 15
+font-thicken = true
+background-blur-radius = 20
+mouse-hide-while-typing = true
+window-decoration = none
+keybind = shift+enter=text:\x1b\r
+macos-titlebar-style = hidden
+keybind = global:alt+shift+q=toggle_quick_terminal
+quick-terminal-position = center
+quick-terminal-autohide = true
+
+# clipboard-read = allow
+# clipboard-write = allow
+# copy-on-select = false
+window-padding-x = 2
+window-padding-y = 2
+window-padding-balance = true
+font-family = CaskaydiaMono Nerd Font Mono Regular
+font-family-bold = CaskaydiaMono Nerd Font Mono Bold
+font-family-italic = CaskaydiaMono Nerd Font Mono Italic
+font-family-bold-italic = CaskaydiaMono Nerd Font Mono Bold Italic
+#
+# keybind = shift+enter=text:"\n"
+
+cursor-style = block
+window-padding-balance = true
