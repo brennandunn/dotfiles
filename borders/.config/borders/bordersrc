@@ -1,0 +1,12 @@
+#!/bin/bash
+
+options=(
+  style=rounded
+  width=7.0
+  hidpi=on
+  active_color="gradient(top_left=0xffc6a0f6,bottom_right=0xff8aadf4)"
+  inactive_color="gradient(top_left=0xff444654,bottom_right=0xff3a3c4a)"
+  blacklist="Loom,Screen Studio"
+)
+
+borders "${options[@]}"
