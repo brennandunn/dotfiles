@@ -31,9 +31,8 @@ theme = rose-pine-moon
 window-theme = system
 shell-integration = fish
 # shell-integration-features = no-cursor
-font-size = 15
+font-size = 10
 font-thicken = true
-background-blur-radius = 20
 mouse-hide-while-typing = true
 window-decoration = none
 keybind = shift+enter=text:\x1b\r
@@ -41,6 +40,7 @@ macos-titlebar-style = hidden
 keybind = global:alt+shift+q=toggle_quick_terminal
 quick-terminal-position = center
 quick-terminal-autohide = true
+confirm-close-surface = false
 
 # clipboard-read = allow
 # clipboard-write = allow
