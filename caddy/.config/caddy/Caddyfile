@@ -1,0 +1,74 @@
+{
+	local_certs
+}
+
+# API Laravel app with Vite HMR support
+https://api.rightmessage.test {
+	# Main Laravel backend
+	reverse_proxy localhost:8000 {
+		header_up Host {host}
+		header_up X-Real-IP {remote}
+		header_up X-Forwarded-For {remote}
+		header_up X-Forwarded-Proto {scheme}
+	}
+	
+	# Vite HMR WebSocket and assets
+	@vite {
+		path /@vite/* 
+		path /@id/*
+		path /resources/*
+		path /@fs/*
+		path /node_modules/*
+		path /__vite_ping
+	}
+	handle @vite {
+		reverse_proxy [::1]:5175
+	}
+	
+	tls internal
+}
+
+# CMS Statamic app with Vite HMR support  
+https://rightmessage.test {
+	# Main Laravel/Statamic backend
+	reverse_proxy localhost:8001 {
+		header_up Host {host}
+		header_up X-Real-IP {remote}
+		header_up X-Forwarded-For {remote}
+		header_up X-Forwarded-Proto {scheme}
+	}
+	
+	# Vite HMR WebSocket and assets
+	@vite {
+		path /@vite/*
+		path /@id/*
+		path /resources/*
+		path /@fs/*
+		path /node_modules/*
+		path /__vite_ping
+		path /build/*
+	}
+	handle @vite {
+		reverse_proxy [::1]:5174 {
+			header_up Host {host}
+			header_up X-Real-IP {remote}
+			header_up X-Forwarded-For {remote}
+			header_up X-Forwarded-Proto {scheme}
+			header_up Connection {http.request.header.Connection}
+			header_up Upgrade {http.request.header.Upgrade}
+		}
+	}
+	
+	tls internal
+}
+
+# Webapp Vue/Vite frontend (SPA - all requests go to Vite)
+https://app.rightmessage.test {
+	reverse_proxy https://localhost:5173 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+	
+	tls internal
+}
