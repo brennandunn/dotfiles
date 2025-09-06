@@ -1,0 +1,67 @@
+# on Ghostty's website, at https://ghostty.org/docs/config.
+
+# Config syntax crash course
+# ==========================
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# window-padding-x = 2
+#
+# # Spacing around the equals sign does not matter.
+# # All of these are identical:
+# key=value
+# key= value
+# key =value
+# key = value
+#
+# # Any line beginning with a # is a comment. It's not possible to put
+# # a comment after a config option, since it would be interpreted as a
+# # part of the value. For example, this will have a value of "#123abc":
+# background = #123abc
+#
+# # Empty values are used to reset config keys to default.
+# key =
+#
+# # Some config options have unique syntaxes for their value,
+# # which is explained in the docs for that config option.
+# # Just for example:
+# resize-overlay-duration = 4s 200ms
+
+#theme = tokyonight
+# theme = rose-pine-moon
+theme = rose-pine
+shell-integration = bash
+font-family = CaskaydiaMono Nerd Font Mono
+font-size = 10
+
+clipboard-read = "allow"
+clipboard-paste-protection = false
+
+window-decoration = false
+background-opacity = 0.99
+
+keybind = shift+enter=text:\x1b\r
+keybind = global:alt+shift+q=toggle_quick_terminal
+
+keybind = ctrl+v=paste_from_clipboard
+
+quick-terminal-position = center
+quick-terminal-autohide = true
+
+confirm-close-surface = false
+resize-overlay = never
+
+link-url = true
+window-inherit-working-directory = true
+window-inherit-font-size = true
+clipboard-trim-trailing-spaces = true
+
+# clipboard-read = allow
+# clipboard-write = allow
+# copy-on-select = false
+window-padding-x = 10
+window-padding-y = 5
+window-padding-balance = true
+#
+# keybind = shift+enter=text:"\n"
+
+custom-shader = ./shaders/cursor_blaze_rose_pine.glsl

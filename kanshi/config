@@ -1,0 +1,20 @@
+profile docked {
+  output "LG Electronics LG HDR 4K 301MAYYGR218" {
+    scale 1.5
+    position 0,0
+  }
+  output eDP-1 disable
+}
+
+profile mobile {
+  output eDP-1 {
+    enable
+    mode 2880x1920@120Hz
+    scale 2
+    position 0,0
+  }
+}
+
+profile fallback {
+  output * enable
+}
