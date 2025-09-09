@@ -71,6 +71,7 @@ handle() {
   openwindow*) adjust_padding ;;
   closewindow*) adjust_padding ;;
   workspace*) adjust_padding ;;
+  configreloaded*) adjust_padding ;;
   esac
 }
 

@@ -3,3 +3,4 @@
 -- Add any additional options here
 vim.opt.relativenumber = true
 vim.g.root_spec = { "cwd" }
+vim.diagnostic.disable()

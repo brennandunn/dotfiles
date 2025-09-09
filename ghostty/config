@@ -28,7 +28,7 @@
 
 #theme = tokyonight
 # theme = rose-pine-moon
-theme = rose-pine
+theme = dark:rose-pine-moon,light:rose-pine-dawn
 shell-integration = bash
 font-family = CaskaydiaMono Nerd Font Mono
 font-size = 10
@@ -64,4 +64,4 @@ window-padding-balance = true
 #
 # keybind = shift+enter=text:"\n"
 
-custom-shader = ./shaders/cursor_blaze_rose_pine.glsl
+# custom-shader = ./shaders/cursor_blaze_rose_pine.glsl

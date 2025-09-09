@@ -58,15 +58,20 @@ window#waybar {
 #pulseaudio,
 #clock,
 #power-profiles-daemon,
+#custom-darkman,
 #custom-omarchy {
   min-width: 12px;
   margin: 0 7.5px;
 }
 
+#network span {
+  margin-left: 10px;
+}
+
 #cpu span { opacity: 0.5; }
 
 #custom-expand-icon {
-  margin-right: 7px;
+  margin-right: 2px;
 }
 
 tooltip {

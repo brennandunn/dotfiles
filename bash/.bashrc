@@ -14,8 +14,13 @@ eval "$(ssh-agent -s)" >/dev/null
 
 alias tm="tmux attach"
 alias cc="cliphist list | fzf | cliphist decode | wl-copy"
+alias finder="nautilus . >/dev/null 2>&1 &"
 alias yolo="claude --dangerously-skip-permissions --continue"
 alias yolonew="claude --dangerously-skip-permissions"
+
+alias vpn-up='sudo systemctl start openvpn-client@ireland'
+alias vpn-down='sudo systemctl stop openvpn-client@ireland'
+alias vpn-log='journalctl -u openvpn-client@ireland -f'
 # alias restart-workspace-padding='pkill -f "monitor-workspace-watcher.sh" && ~/.config/hypr/scripts/monitor-workspace-watcher.sh &'
 
 # Add your own exports, aliases, and functions here.

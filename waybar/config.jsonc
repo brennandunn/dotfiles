@@ -27,11 +27,12 @@
     "power-profiles-daemon",
     "battery",
     "clock",
+    // "custom/darkman",
     "custom/update"
   ],
   "hyprland/window": {
     "max-length": 40,
-    "format": "<span> </span> {}",
+    "format": "<span> </span> {title}",
     "rewrite": {
       "(.*) — Chromium": "🌎 $1",
     },
@@ -92,6 +93,17 @@
     "format": "inbox <span color='#908caa'>{}</span>",
     "on-click": "omarchy-launch-webapp 'https://app.fastmail.com/mail/Inbox/'"
   },
+  "custom/darkman": {
+    "exec": "waybar-darkman",
+    "interval": 5,
+    "format": "{}",
+    "format-icons": {
+      "day": "",
+      "night": "",
+    },
+    "on-click": "darkman toggle"
+  },
+
 
   "cpu": {
     "interval": 5,
@@ -108,7 +120,7 @@
   "network": {
     "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
     "format" : "{icon}",
-    "format-wifi" : "{icon}",
+    "format-wifi" : "{icon} <span color='#908caa'>{signalStrength}%</span>",
     "format-ethernet" : "󰀂",
     "format-disconnected" : "󰖪",
     "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
@@ -159,7 +171,7 @@
     "on-click": "blueberry"
   },
   "pulseaudio": {
-    "format": "{icon}  <span color='#908caa'>{volume}%</span>",
+    "format": "{icon} <span color='#908caa'>{volume}%</span>",
     "on-click": "alacritty --class=Wiremix -e wiremix -v input",
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
