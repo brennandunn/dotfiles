@@ -30,7 +30,7 @@
 # theme = rose-pine-moon
 theme = dark:rose-pine-moon,light:rose-pine-dawn
 shell-integration = bash
-font-family = CaskaydiaMono Nerd Font Mono
+font-family = CaskaydiaMono Nerd Font
 font-size = 10
 
 clipboard-read = "allow"

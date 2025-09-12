@@ -56,7 +56,7 @@ trap "rm -f $PIDFILE" EXIT INT TERM
 adjust_padding() {
   current_workspace_id=$(hyprctl activeworkspace -j | jq -r '.id')
   current_monitor=$(hyprctl activeworkspace -j | jq -r '.monitor')
-  window_count=$(hyprctl activeworkspace -j | jq -r '.windows')
+  window_count=$(hyprctl clients -j | jq "[.[] | select(.workspace.id == $current_workspace_id and .floating == false)] | length")
 
   if [[ "$current_monitor" == "$disable_on" ]] || [[ $window_count -gt 1 ]]; then
     hyprctl keyword workspace "$current_workspace_id, gapsout:$plural_padding"

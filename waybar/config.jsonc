@@ -80,7 +80,7 @@
   },
 
   "custom/helpscout": {
-    "format": "helpscout <span color='#908caa'>{}</span>",
+    "format": "hs <span color='#908caa'>{}</span>",
     "return-type": "string",
     "interval": 60,
     "exec": "helpscout-conversations.sh",
@@ -90,7 +90,7 @@
   "custom/inbox": {
     "exec": "inbox-count",
     "interval": 60,
-    "format": "inbox <span color='#908caa'>{}</span>",
+    "format": "in <span color='#908caa'>{}</span>",
     "on-click": "omarchy-launch-webapp 'https://app.fastmail.com/mail/Inbox/'"
   },
   "custom/darkman": {
@@ -112,7 +112,7 @@
     "on-click": "alacritty -e btop"
   },
   "clock": {
-    "format": "{:%d / %H:%M}",
+    "format": "{:%a %d / %H:%M}",
     "format-alt": "{:%d %B W%V %Y}",
     "tooltip": false,
     "on-click-right": "omarchy-cmd-tzupdate"

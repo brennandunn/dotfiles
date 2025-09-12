@@ -3,7 +3,7 @@
     "font": {
         "size": 10
     },
-    "popToRootOnClose": false,
+    "popToRootOnClose": true,
     "rootSearch": {
         "searchFiles": true
     },

@@ -135,6 +135,13 @@ https://clientportal.test {
 	file_server
 }
 
+# Personalization Bootcamp
+https://bootcamp.localhost {
+	root * /home/brennandunn/code/_solo/personalizationbootcamp
+	file_server
+}
+
+
 # Create and Sell
 https://createandsell.local.rightmessagedev.com {
   import inttls
