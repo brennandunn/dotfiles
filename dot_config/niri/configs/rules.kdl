@@ -1,0 +1,77 @@
+
+window-rule {
+  match is-focused=false
+
+  opacity 0.96
+}
+
+window-rule {
+  match title="^(file_progress)$"
+  match title="^(confirm)$"
+  match title="^(dialog)$"
+  match title="^(download)$"
+  match title="^(notification )$"
+  match title="^(error)$"
+  match title="^(splash)$"
+  match title="^(nwg-look)$"
+  match title="^(confirmreset)$"
+  match title="^(Delete profile)$"
+  match title="^File Operation Progress$"
+  match title="^Confirm to replace files$"
+  match title="^KDE Connect URL handler$"
+  match title="^(Open File)(.*)$"
+  match title="^(Select a File)(.*)$"
+  match title="^(Choose wallpaper)(.*)$"
+  match title="^(Open Folder)(.*)$"
+  match title="^(Save As)(.*)$"
+  match title="^(Library)(.*)$"
+  match title="^(File Upload)(.*)$"
+  match title="^(hyprland-share-picker)$"
+  match title="^(.*)-Google$"
+  match title="^(.*)System Update$"
+  
+  match app-id="^xdm-app$"
+  match app-id="^org.qbittorrent.qBittorrent$"
+  match app-id="^org.pulseaudio.pavucontrol$"
+  match app-id="^btop$"
+  match app-id="^Impala$"
+  match app-id="^Wiremix$"
+  
+  open-floating true
+}
+
+window-rule {
+  match title="^(.*)is sharing your screen."
+
+  block-out-from "screencast"
+  default-floating-position x=5 y=5 relative-to="bottom"
+  open-floating true
+
+  border {
+    off
+  }
+}
+
+window-rule {
+  match app-id="chromium$" title="^Picture-in-Picture$"
+  match app-id="chromium$" title="^Meet(.*)$"
+  match app-id="chromium$" title="^Brennan Dunn <>(.*)Chat$"
+
+  block-out-from "screencast"
+
+  open-floating true
+
+  default-floating-position x=20 y=20 relative-to="bottom-right"
+  default-column-width { fixed 280; }
+  default-window-height { fixed 170; }
+
+  border {
+    off
+  }
+}
+
+layer-rule {
+  match namespace="^sway$"
+
+  block-out-from "screencast"
+}

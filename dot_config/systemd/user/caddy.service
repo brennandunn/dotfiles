@@ -1,0 +1,13 @@
+[Unit]
+Description=Caddy (user)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/bin/caddy run --config %h/.config/caddy/Caddyfile --adapter caddyfile
+ExecReload=/usr/bin/caddy reload --config %h/.config/caddy/Caddyfile --adapter caddyfile
+Restart=on-failure
+WorkingDirectory=%h
+
+[Install]
+WantedBy=default.target

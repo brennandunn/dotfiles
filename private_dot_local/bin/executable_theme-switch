@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 [light|dark]"
+  exit 1
+fi
+
+MODE="$1"
+
+if [ "$MODE" != "light" ] && [ "$MODE" != "dark" ]; then
+  echo "Error: Mode must be 'light' or 'dark'"
+  exit 1
+fi
+
+if [ "$MODE" = "light" ]; then
+  # Niri configs
+  /home/brennandunn/.scripts/niri_configs.sh light
+
+  # GNOME settings
+  gsettings set org.gnome.desktop.interface gtk-theme "rose-pine-dawn-gtk"
+  gsettings set org.gnome.desktop.interface color-scheme "prefer-light"
+
+  # Wallpaper
+  swww img /home/brennandunn/.config/themes/day/background.png --transition-duration=1
+
+  # Kitty
+  sed -i '1s/.*/include rosepine-dawn.conf/' ~/.config/kitty/kitty.conf
+
+  # Neovim
+  sed -i 's|vim\.cmd("colorscheme rose-pine-.*|vim.cmd("colorscheme rose-pine-dawn")|' ~/.config/nvim/lua/plugins/rose-pine.lua
+
+  # Vicinae
+  sed -i 's|"name": "rosepine-.*.json"|"name": "rosepine-dawn.json"|' ~/.config/vicinae/vicinae.json
+
+  # Claude
+  sed -i 's|"theme": "[^"]*"|"theme": "light"|' ~/.claude.json
+
+  # Swaync
+  unlink ~/.config/swaync/style.css
+  ln -s ~/.config/swaync/style-light.css ~/.config/swaync/style.css
+
+  # SwayOSD
+  unlink ~/.config/swayosd/theme.css
+  ln -s ~/.config/swayosd/light.css ~/.config/swayosd/theme.css
+  systemctl --user restart swayosd
+
+else
+  # Niri configs
+  /home/brennandunn/.scripts/niri_configs.sh dark
+
+  # GNOME settings
+  gsettings set org.gnome.desktop.interface gtk-theme "rose-pine-moon-gtk"
+  gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+
+  # Wallpaper
+  swww img /home/brennandunn/.config/themes/night/background.png --transition-duration=1
+
+  # Kitty
+  sed -i '1s/.*/include rosepine-moon.conf/' ~/.config/kitty/kitty.conf
+
+  # Neovim
+  sed -i 's|vim\.cmd("colorscheme rose-pine-.*|vim.cmd("colorscheme rose-pine-moon")|' ~/.config/nvim/lua/plugins/rose-pine.lua
+
+  # Vicinae
+  sed -i 's|"name": "rosepine-.*.json"|"name": "rosepine-moon.json"|' ~/.config/vicinae/vicinae.json
+
+  # Claude
+  sed -i 's|"theme": "[^"]*"|"theme": "dark"|' ~/.claude.json
+
+  # Swaync
+  unlink ~/.config/swaync/style.css
+  ln -s ~/.config/swaync/style-dark.css ~/.config/swaync/style.css
+
+  # SwayOSD
+  unlink ~/.config/swayosd/theme.css
+  ln -s ~/.config/swayosd/dark.css ~/.config/swayosd/theme.css
+  systemctl --user restart swayosd
+
+fi
+
+# Common actions
+killall -SIGUSR1 kitty
+swaync-client -rs
+
+# Notify if Claude Code is running (theme change requires restart)
+if pgrep -x "claude" >/dev/null; then
+  echo "Note: Restart Claude Code to apply the new theme"
+fi

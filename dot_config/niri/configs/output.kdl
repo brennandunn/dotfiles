@@ -1,0 +1,10 @@
+output "eDP-1" {
+    mode "2880x1920"
+    scale 2
+    transform "normal"
+}
+
+output "LG Electronics LG HDR 4K 301MAYYGR218" {
+  scale 1.5
+}
+

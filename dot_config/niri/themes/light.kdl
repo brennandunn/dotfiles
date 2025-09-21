@@ -1,0 +1,45 @@
+// window-rule {
+//   geometry-corner-radius 6
+//   clip-to-geometry true
+// }
+
+layout {
+    gaps 10
+    center-focused-column "never"
+
+    preset-column-widths {
+        // proportion sets the width as a fraction of the output width, taking gaps into account.
+        // for example, you can perfectly fit four windows sized "proportion 0.25" on an output.
+        // the default preset widths are 1/3, 1/2 and 2/3 of the output.
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    focus-ring {
+        off
+    }
+
+    border {
+        width 3
+        urgent-color "#9b0000"
+        active-gradient from="rgba(235, 188, 186, 1.0)" to="rgba(49, 116, 143, 1.0)" angle=45 in="oklch increasing hue"
+        inactive-gradient from="rgba(235, 188, 186, 0.3)" to="rgba(49, 116, 143, 0.3)" angle=45 in="oklch increasing hue"
+    }
+
+    shadow {
+    }
+
+    // shadow {
+    //   on
+    //   softness 5
+    //   spread 1
+    //   draw-behind-window true
+    //   offset x=0 y=0
+    //   color "#908caaa4"
+    // }
+
+    struts {
+    }
+}
+

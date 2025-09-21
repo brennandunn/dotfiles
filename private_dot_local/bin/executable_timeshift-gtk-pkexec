@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Launch Timeshift GUI on Wayland with pkexec, preserving session env.
+exec pkexec env \
+  DISPLAY="${DISPLAY}" \
+  XAUTHORITY="${XAUTHORITY}" \
+  WAYLAND_DISPLAY="${WAYLAND_DISPLAY}" \
+  XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR}" \
+  GDK_BACKEND=wayland \
+  timeshift-gtk

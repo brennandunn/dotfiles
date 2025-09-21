@@ -1,0 +1,78 @@
+@define-color base #232136;
+@define-color iris #c4a7e7;
+
+* {
+  min-height: 0;
+  font-family: 'CaskaydiaMono Nerd Font';
+  font-size: 12px;
+}
+
+window#waybar {
+  background: linear-gradient(to right, @background-l, @background-r); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  border: 1px solid rgba(196, 167, 231, 0.3);
+  color: @text;
+}
+
+.modules-left {
+  margin-left: 8px;
+}
+
+.modules-right {
+  margin-right: 8px;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+  color: @foreground;
+}
+
+#workspaces button.active {
+  color: @active;
+}
+
+#workspaces button.empty {
+  color: @muted;
+}
+
+#window {
+  color: @text;
+  opacity: 0.75;
+}
+
+#window span {
+  opacity: 0.25;
+}
+
+#tray,
+#cpu,
+#battery,
+#network,
+#bluetooth,
+#pulseaudio,
+#clock,
+#power-profiles-daemon,
+#custom-darkman,
+#custom-inbox,
+#custom-helpscout,
+#custom-omarchy {
+  min-width: 12px;
+  margin: 0 7.5px;
+}
+
+#network span {
+  margin-left: 10px;
+}
+
+#cpu span { opacity: 0.5; }
+
+#custom-expand-icon {
+  margin-right: 2px;
+}
+
+tooltip {
+  padding: 2px;
+}

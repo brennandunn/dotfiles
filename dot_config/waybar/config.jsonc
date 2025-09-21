@@ -1,0 +1,150 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "spacing": 3,
+  "height": 26,
+  "margin-top": 5,
+  "margin-right": 10,
+  "margin-bottom": 0,
+  "margin-left": 10,
+
+  "modules-left": [
+    "niri/workspaces",
+    "niri/window"
+  ],
+  "modules-center": [
+  ],
+  "modules-right": [
+    "group/tray-expander",
+    "custom/helpscout",
+    "custom/inbox",
+    "bluetooth",
+    "network",
+    "pulseaudio",
+    "cpu",
+    "power-profiles-daemon",
+    "battery",
+    "clock",
+  ],
+
+  "niri/workspaces": {
+    "format": "{icon}"
+  },
+
+  "niri/window": {
+    "format": "{}"
+  },
+
+  "custom/helpscout": {
+    "format": "hs <span color='#908caa'>{}</span>",
+    "return-type": "string",
+    "interval": 60,
+    "exec": "/home/brennandunn/.scripts/helpscout-conversations.sh",
+    "on-click": "omarchy-launch-webapp 'https://secure.helpscout.net/inboxes/ca9f1c7108512ae1/views/8176762'"
+  },
+
+  "custom/inbox": {
+    "exec": "/home/brennandunn/.scripts/inbox-count",
+    "interval": 60,
+    "format": "in <span color='#908caa'>{}</span>",
+    "on-click": "omarchy-launch-webapp 'https://app.fastmail.com/mail/Inbox/'"
+  },
+  
+  "cpu": {
+    "interval": 5,
+    "format-alt": "󰍛 <span color='#908caa'>{usage}%</span>",
+    "format": "󰍛 <span color='#908caa'>{usage}%</span>",
+    "on-click": "kitty --class=btop btop"
+  },
+  "clock": {
+    "format": "{:%a %d / %H:%M}",
+    "format-alt": "{:%d %B W%V %Y}",
+    "tooltip": false,
+    "on-click-right": "omarchy-cmd-tzupdate"
+  },
+  "network": {
+    "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
+    "format" : "{icon}",
+    "format-wifi" : "{icon} <span color='#908caa'>{signalStrength}%</span>",
+    "format-ethernet" : "󰀂",
+    "format-disconnected" : "󰖪",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "nospacing": 1,
+    "on-click": "kitty --class=Impala impala"
+  },
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-discharging": "<span color='#eb6f92'>{icon}</span> <span color='#908caa'>{capacity}%</span>",
+    "format-charging":    "<span color='#f6c177'>{icon}</span>",
+    "format-plugged":     "<span color='#f6c177'></span>",
+    "format-icons": {
+      "charging": [
+        "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"
+      ],
+      "default": [
+        "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
+      ]
+    },
+    "format-full": "󰂅",
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "interval": 5,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "󰂲",
+    "format-connected": "",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "blueberry"
+  },
+  "pulseaudio": {
+    "format": "{icon} <span color='#908caa'>{volume}%</span>",
+    "on-click": "kitty --class=Wiremix wiremix -v input",
+    "on-click-right": "pamixer -t",
+    "tooltip-format": "Playing at {volume}%",
+    "scroll-step": 5,
+    "format-muted": "󰝟",
+    "format-icons": {
+      "headphone": [" ", " ", " ", " "],
+      "default": ["", "", ""],
+    }
+  },
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": [
+      "custom/expand-icon",
+    "tray"
+    ]
+  },
+  "custom/expand-icon": {
+    "format": " ",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 12,
+    "spacing": 12
+  }
+}

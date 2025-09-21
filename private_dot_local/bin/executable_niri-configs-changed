@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+/home/brennandunn/.scripts/niri_configs.sh $(darkman get)

@@ -1,0 +1,102 @@
+# ---------- Core ----------
+export ZDOTDIR="$HOME"
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=200000
+export SAVEHIST=200000
+setopt hist_ignore_dups hist_ignore_all_dups share_history inc_append_history
+setopt autocd interactivecomments
+unsetopt beep
+
+# Paths you commonly want early
+export PATH="$HOME/.local/bin:$HOME/bin:$HOME/.scripts:$PATH"
+
+# If you use mise for toolchains:
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh --shims)"
+fi
+
+# ---------- zinit bootstrap ----------
+ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zinit/zinit.git"
+source "$ZINIT_HOME/zinit.zsh"
+
+# Speed up completion system
+autoload -Uz compinit
+zicompinit
+zicdreplay
+
+# ---------- Plugins (lazy, quiet) ----------
+# Completion collection (extra completions)
+zinit ice wait lucid blockf
+zinit light zsh-users/zsh-completions
+
+# Autosuggestions
+zinit ice wait lucid
+zinit light zsh-users/zsh-autosuggestions
+
+# History substring search (↑/↓ search)
+zinit ice wait lucid
+zinit light zsh-users/zsh-history-substring-search
+
+# Fast syntax highlighting (keep this last among syntax hl)
+zinit ice wait lucid atload"_zsh_autosuggest_start"
+zinit light zdharma-continuum/fast-syntax-highlighting
+
+# FZF-powered completion UI
+zinit ice wait lucid
+zinit light Aloxaf/fzf-tab
+zmodload zsh/complist
+
+zinit ice lucid wait'0'
+zinit light joshskidmore/zsh-fzf-history-search
+
+# VI Mode
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
+
+# ---------- Keybindings ----------
+# Use ↑/↓ to search history by current prefix
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# Optional: Vim mode in the shell (uncomment if you want it)
+# bindkey -v
+
+# ---------- Prompt (Starship) ----------
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+
+# ---------- Aliases / quality-of-life ----------
+alias cat='bat -pp'  # pretty-print without pager
+alias grep='grep --color=auto'
+alias cd='z'
+alias ls="eza -1 --icons=always --group-directories-first -t=modified -l --git --no-user --time-style=relative"
+alias ll='ls -lah'
+alias reload="source ~/.bashrc"
+alias tm="tmux attach"
+alias finder="nautilus . >/dev/null 2>&1 &"
+alias yolo="claude --dangerously-skip-permissions --continue"
+alias yolonew="claude --dangerously-skip-permissions"
+alias update="safe-update"
+
+open() {
+  xdg-open "$@" >/dev/null 2>&1 &
+}
+
+alias vpn-up='sudo systemctl start openvpn-client@ireland'
+alias vpn-down='sudo systemctl stop openvpn-client@ireland'
+alias vpn-log='journalctl -u openvpn-client@ireland -f'
+
+
+
+
+
+
+
+
+# Bring over your bash aliases if you have them
+[[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
+
+# ---------- Completions finalization ----------
+# Re-run compinit after fzf-tab if needed
+# compinit -u
+

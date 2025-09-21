@@ -1,0 +1,16 @@
+[Unit]
+Description=Watch ~/.config/niri for changes
+
+[Path]
+PathChanged=/home/brennandunn/.config/niri/config.kdl
+PathChanged=/home/brennandunn/.config/niri/configs/animations.kdl
+PathChanged=/home/brennandunn/.config/niri/configs/binds.kdl
+PathChanged=/home/brennandunn/.config/niri/configs/input.kdl
+PathChanged=/home/brennandunn/.config/niri/configs/misc.kdl
+PathChanged=/home/brennandunn/.config/niri/configs/output.kdl
+PathChanged=/home/brennandunn/.config/niri/configs/rules.kdl
+PathChanged=/home/brennandunn/.config/niri/themes/dark.kdl
+PathChanged=/home/brennandunn/.config/niri/themes/light.kdl
+
+[Install]
+WantedBy=default.target

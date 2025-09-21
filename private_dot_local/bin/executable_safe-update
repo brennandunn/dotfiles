@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "📦 Checking for updates..."
+checkupdates || true
+
+echo "📸 Creating Timeshift snapshot..."
+sudo timeshift --create --comments "pre-update $(date +%F_%T)" --tags D
+
+echo "⬆️ Running paru -Syu..."
+paru -Syu
+
+echo "🔍 Checking if reboot is needed..."
+if needrestart -p | grep -q "NEEDRESTART-KSTA: 1"; then
+  echo "⚠️ Reboot recommended (kernel/systemd/glibc updated)."
+else
+  echo "✅ No reboot strictly required, but consider weekly reboots anyway."
+fi

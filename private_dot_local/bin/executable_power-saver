@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+# Power Saver toggle for Niri + iwd + AMD iGPU + Docker
+# Usage: power-saver {on|off|airplane-on|airplane-off}
+set -euo pipefail
+
+MODE="${1:-}"
+[[ "$MODE" =~ ^(on|off|airplane-on|airplane-off)$ ]] || {
+  echo "Usage: power-saver {on|off|airplane-on|airplane-off}"
+  exit 1
+}
+
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/power-saver"
+mkdir -p "$STATE_DIR"
+STAMP="$STATE_DIR/enabled"
+SRVFILE="$STATE_DIR/services.txt"
+CTRSFILE="$STATE_DIR/containers.txt"
+EDP_PREV_MODE="$STATE_DIR/edp1-prev-mode.txt"
+
+is_root() { [[ $EUID -eq 0 ]]; }
+sudo_do() { is_root && bash -lc "$*" || sudo bash -lc "$*"; }
+
+# ---------------- iwd Wi-Fi powersave ----------------
+wifi_ifs() { ip -o -br link | awk '$1 ~ /^wl/ {print $1}'; }
+wifi_powersave_on() {
+  command -v iw >/dev/null || return 0
+  while read -r i; do iw dev "$i" set power_save on 2>/dev/null || true; done < <(wifi_ifs)
+}
+wifi_powersave_off() {
+  command -v iw >/dev/null || return 0
+  while read -r i; do iw dev "$i" set power_save off 2>/dev/null || true; done < <(wifi_ifs)
+}
+
+airplane_on() {
+  rfkill block wifi || true
+  rfkill block bluetooth || true
+}
+airplane_off() {
+  rfkill unblock wifi || true
+  rfkill unblock bluetooth || true
+}
+
+# ---------------- Services / Containers ---------------
+services_stop() {
+  : >"$SRVFILE"
+  for s in docker containerd mysqld mariadb postgresql redis; do
+    if systemctl is-active --quiet "$s"; then
+      echo "$s" >>"$SRVFILE"
+      sudo_do "systemctl stop $s"
+    fi
+  done
+  : >"$CTRSFILE"
+  if systemctl is-active --quiet docker && command -v docker >/dev/null; then
+    docker ps --format '{{.Names}}' | tee "$CTRSFILE" >/dev/null || true
+    [[ -s "$CTRSFILE" ]] && docker stop $(cat "$CTRSFILE") >/dev/null || true
+  fi
+}
+
+services_start() {
+  if [[ -s "$SRVFILE" ]]; then
+    while read -r s; do sudo_do "systemctl start $s" || true; done <"$SRVFILE"
+  fi
+  if [[ -s "$CTRSFILE" ]] && command -v docker >/dev/null; then
+    while read -r c; do docker start "$c" >/dev/null || true; done <"$CTRSFILE"
+  fi
+}
+
+# ---------------- Niri display helpers ----------------
+# Returns true if eDP-1 is present and Enabled (clamshell-safe)
+edp_enabled() {
+  niri msg outputs | awk '
+    $0 ~ /\(eDP-1\)/ {inblk=1; next}
+    inblk && $0 ~ /^Output / {inblk=0}
+    inblk && $1=="Enabled"  {print "yes"; exit}
+    inblk && $1=="Disabled" {print "no"; exit}
+  ' | grep -qx yes
+}
+
+# Current active mode token inside eDP-1 block (e.g. 2880x1920@120.000)
+get_edp_active_mode() {
+  niri msg outputs | awk '
+    $0 ~ /\(eDP-1\)/ {inblk=1; next}
+    inblk && $0 ~ /^Output / {inblk=0}
+    inblk && /\*/ {
+      for(i=1;i<=NF;i++) if($i ~ /@/) {gsub(/[\(\)\*]/,"",$i); print $i; exit}
+    }'
+}
+
+# Pick the first 60 Hz mode token (handles 60.001 etc.)
+pick_edp_60hz_mode() {
+  niri msg outputs | awk '
+    $0 ~ /\(eDP-1\)/ {inblk=1; next}
+    inblk && $0 ~ /^Output / {inblk=0}
+    inblk && /@60(\.[0-9]+)?/ {
+      for(i=1;i<=NF;i++) if($i ~ /@60(\.[0-9]+)?/) {gsub(/[\(\)\*]/,"",$i); print $i; exit}
+    }' | head -n1
+}
+
+set_edp_mode() {
+  local m="${1:-}"
+  [[ -n "$m" ]] && niri msg output eDP-1 mode "$m" 2>/dev/null || true
+}
+dim_on() { command -v brightnessctl >/dev/null && brightnessctl set 30% >/dev/null || true; }
+dim_off() { command -v brightnessctl >/dev/null && brightnessctl set 60% >/dev/null || true; }
+
+# ---------------- ON (and airplane-on) ----------------
+if [[ "$MODE" == "on" || "$MODE" == "airplane-on" ]]; then
+  touch "$STAMP"
+
+  # Save & switch eDP-1 to 60 Hz only if it's enabled (not in clamshell)
+  if edp_enabled; then
+    cur="$(get_edp_active_mode || true)"
+    [[ -n "${cur:-}" ]] && echo "$cur" >"$EDP_PREV_MODE" || true
+    want60="$(pick_edp_60hz_mode || true)"
+    [[ -n "${want60:-}" ]] && set_edp_mode "$want60"
+  fi
+
+  # CPU/GPU power nudges
+  powerprofilesctl set power-saver 2>/dev/null || true
+  sudo_do 'for f in /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference; do [[ -e "$f" ]] && echo power > "$f"; done'
+  sudo_do 'echo low > /sys/class/drm/card0/device/power_dpm_force_performance_level' || true
+  sudo_do 'powertop --auto-tune' || true
+
+  # Radios
+  wifi_powersave_on
+  rfkill block bluetooth || true
+  [[ "$MODE" == "airplane-on" ]] && airplane_on
+
+  # Display
+  dim_on
+
+  # Background services/containers
+  services_stop
+
+  # App hints (optional)
+  export POWER_SAVER=1
+  export CHROMIUM_FLAGS="--ozone-platform-hint=wayland --enable-features=UseOzonePlatform"
+
+  notify-send "Power Saver" "Enabled ($MODE)" 2>/dev/null || true
+  exit 0
+fi
+
+# ---------------- OFF (and airplane-off) ---------------
+[[ -f "$STAMP" ]] && rm -f "$STAMP"
+[[ "$MODE" == "airplane-off" ]] && airplane_off
+
+powerprofilesctl set balanced 2>/dev/null || true
+wifi_powersave_off
+rfkill unblock bluetooth || true
+sudo_do 'echo auto > /sys/class/drm/card0/device/power_dpm_force_performance_level' || true
+
+# Restore eDP-1 previous mode only if screen is enabled
+if edp_enabled && [[ -s "$EDP_PREV_MODE" ]]; then
+  set_edp_mode "$(cat "$EDP_PREV_MODE")"
+fi
+dim_off
+
+services_start
+
+unset POWER_SAVER CHROMIUM_FLAGS
+notify-send "Power Saver" "Disabled ($MODE)" 2>/dev/null || true

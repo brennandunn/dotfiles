@@ -1,0 +1,3 @@
+dot_config/tmux/plugins/**
+dot_config/caddy/private_autosave.json
+dot_config/vicinae/themes/**

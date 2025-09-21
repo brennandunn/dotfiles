@@ -1,0 +1,15 @@
+[Unit]
+Description=Darkman (auto dark/light)
+After=graphical-session.target swww-daemon.service
+Wants=graphical-session.target swww-daemon.service
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/darkman run
+Restart=on-failure
+# Helpful if PATH differs
+Environment=PATH=%h/.local/bin:%h/.scripts:/usr/local/bin:/usr/bin
+# These are usually already set in systemd --user, but harmless to rely on defaults.
+
+[Install]
+WantedBy=graphical-session.target

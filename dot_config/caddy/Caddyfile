@@ -1,0 +1,160 @@
+playground.localhost {
+    root * /home/brennandunn/code/playground
+    encode gzip zstd
+    file_server browse
+    @assets path *.css *.js *.png *.jpg *.svg *.webp *.woff *.woff2
+    header @assets Cache-Control "public, max-age=31536000, immutable"
+}
+
+http://api.rm.localhost {
+
+	  header {
+	  	Access-Control-Allow-Origin "{http.request.header.origin}"
+	  	Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+	  	Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With, X-XSRF-TOKEN"
+	  	Access-Control-Allow-Credentials "true"
+	  }
+
+	  reverse_proxy localhost:8000 {
+		  header_up Host {host}
+		  header_up X-Real-IP {remote}
+		  header_up X-Forwarded-For {remote}
+		  header_up X-Forwarded-Proto {scheme}
+
+		  header_down -Access-Control-Allow-Origin
+		  header_down -Access-Control-Allow-Methods
+		  header_down -Access-Control-Allow-Headers
+		  header_down -Access-Control-Allow-Credentials
+
+	  }
+
+	  # Vite HMR WebSocket and assets
+	  @vite {
+	  	path /@vite/*
+	  	path /@id/*
+	  	path /resources/*
+	  	path /@fs/*
+	  	path /node_modules/*
+	  	path /__vite_ping
+	  }
+	  handle @vite {
+	  	reverse_proxy [::1]:5175
+  	}
+
+
+  }
+
+# CMS Statamic app with Vite HMR support  
+rightmessage.localhost {
+
+	# Main Laravel/Statamic backend
+	reverse_proxy localhost:8001 {
+		header_up Host {host}
+		header_up X-Real-IP {remote}
+		header_up X-Forwarded-For {remote}
+		header_up X-Forwarded-Proto {scheme}
+	}
+	
+	# Vite HMR WebSocket and assets
+	@vite {
+		path /@vite/*
+		path /@id/*
+		path /resources/*
+		path /@fs/*
+		path /node_modules/*
+		path /__vite_ping
+		path /build/*
+	}
+	handle @vite {
+		reverse_proxy [::1]:5174 {
+			header_up Host {host}
+			header_up X-Real-IP {remote}
+			header_up X-Forwarded-For {remote}
+			header_up X-Forwarded-Proto {scheme}
+			header_up Connection {http.request.header.Connection}
+			header_up Upgrade {http.request.header.Upgrade}
+		}
+	}
+}
+
+# Webapp Vue/Vite frontend (SPA - all requests go to Vite)
+http://app.rm.localhost {
+  reverse_proxy http://localhost:5173
+}
+
+# WordPress Client Portal Development
+clientportal.localhost {
+	root * /home/brennandunn/code/clientportal-wp
+	encode gzip zstd
+	
+	# PHP FastCGI
+	php_fastcgi unix//tmp/php-fpm.sock {
+		index index.php
+	}
+	
+	# WordPress pretty permalinks
+	@notfile {
+		not file
+	}
+	rewrite @notfile /index.php
+	
+	# Security headers
+	header {
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+	}
+	
+	# Hide sensitive files
+	@blocked {
+		path *.sql
+		path /wp-config.php
+		path /wp-config-sample.php
+		path /.htaccess
+		path /readme.html
+		path /license.txt
+	}
+	respond @blocked 404
+	
+	file_server
+}
+
+# Personalization Bootcamp
+bootcamp.localhost {
+	root * /home/brennandunn/code/_solo/personalizationbootcamp
+	file_server
+}
+
+
+# Create and Sell
+createandsell.localhost {
+
+	# Main Laravel/Statamic backend
+	reverse_proxy localhost:8002 {
+		header_up Host {host}
+		header_up X-Real-IP {remote}
+		header_up X-Forwarded-For {remote}
+		header_up X-Forwarded-Proto {scheme}
+	}
+
+	# Vite HMR WebSocket and assets
+	@vite {
+		path /@vite/*
+		path /@id/*
+		path /resources/*
+		path /@fs/*
+		path /node_modules/*
+		path /__vite_ping
+		path /build/*
+	}
+	handle @vite {
+		reverse_proxy [::1]:5178 {
+			header_up Host {host}
+			header_up X-Real-IP {remote}
+			header_up X-Forwarded-For {remote}
+			header_up X-Forwarded-Proto {scheme}
+			header_up Connection {http.request.header.Connection}
+			header_up Upgrade {http.request.header.Upgrade}
+		}
+	}
+}
+

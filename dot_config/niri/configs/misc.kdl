@@ -1,0 +1,48 @@
+// spawn-at-startup "waybar"
+// spawn-at-startup "darkman run"
+
+// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
+// spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
+
+spawn-at-startup "swaync"
+
+environment {
+  QT_QPA_PLATFORM "wayland"
+  ELECTRON_OZONE_PLATFORM_HINT "auto"
+  EDITOR "nvim"
+  MOZ_ENABLE_WAYLAND "1"
+}
+
+cursor {
+  xcursor-theme "BreezeX-RosePine-Linux"
+}
+
+// Uncomment this line to ask the clients to omit their client-side decorations if possible.
+// If the client will specifically ask for CSD, the request will be honored.
+// Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
+// This option will also fix border/focus ring drawing behind some semitransparent windows.
+// After enabling or disabling this, you need to restart the apps for this to take effect.
+prefer-no-csd
+
+// You can change the path where screenshots are saved.
+// A ~ at the front will be expanded to the home directory.
+// The path is formatted with strftime(3) to give you the screenshot date and time.
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+hotkey-overlay {
+  skip-at-startup
+}
+
+overview {
+  backdrop-color "#44415a"
+
+  workspace-shadow {
+    color "#2321368a"
+  }
+}
+
+gestures {
+  hot-corners {
+    off
+  }
+}

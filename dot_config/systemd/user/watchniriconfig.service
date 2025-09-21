@@ -1,0 +1,5 @@
+[Unit]
+Description=Run script when niri files change
+
+[Service]
+ExecStart=/home/brennandunn/.local/bin/niri-configs-changed
